@@ -1,0 +1,94 @@
+<html>
+
+<head>
+    <script src="chart.min.js"></script>
+    <script src="chartjs-plugin-datalabels.min.js"></script>
+    <script src="sprints/current.js"></script>
+</head>
+
+<body>
+    <canvas id="myChart" style="width: 3508px; height:2080px"></canvas>
+</body>
+<script>
+    Chart.defaults.global.legend.display = false;
+    Chart.defaults.global.tooltips.enabled = false;
+    Chart.defaults.global.defaultFontColor = '#000';
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var references = labels.map((x, i) => maxHours * (labels.length - 1 - i) / (labels.length - 1));
+    console.log(references);
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+        legend: {
+            display: false
+        },
+        tooltips: {
+            enabled: false
+        },
+        // The data for our dataset
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "",
+                borderColor: 'black',
+                data: references,
+                backgroundColor: 'transparent',
+                pointRadius: 0,
+                borderWidth: 2,
+                datalabels: {
+                    display: false
+                },
+            }, {
+                label: "1",
+                tension: 0,
+                borderColor: 'black',
+                data: sprintData,
+                backgroundColor: 'transparent',
+                pointRadius: 0,
+                borderWidth: 2,
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            plugins: {
+                datalabels: {
+                    backgroundColor: 'black',
+                    borderRadius: 4,
+                    color: 'white',
+                    font: {
+                        weight: 'bold'
+                    },
+                    formatter: Math.round
+                }
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear',
+                    ticks: {
+                        max: maxHours,
+                        suggestedMin: 0,
+                        stepSize: maxHours / 20,
+                        fontSize: 14
+                    },
+                    gridLines: {
+                        zeroLineColor: '#000',
+                        zeroLineWidth: 2
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        zeroLineColor: '#000',
+                        zeroLineWidth: 2
+                    },
+                    ticks: {
+                        fontSize: 14
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+</html>
