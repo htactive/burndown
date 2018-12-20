@@ -7,88 +7,99 @@
 </head>
 
 <body>
+    <select id='sp-select' onchange="return changeSprint(this);" style="margin-bottom: 20px;">
+        <option value="s18">Sprint 18</option>
+        <option value="s17">Sprint 17</option>
+    </select>
     <canvas id="myChart" style="width: 3508px; height:2080px"></canvas>
 </body>
 <script>
+    window.onload = function () {
+        changeSprint(document.getElementById('sp-select'))
+    };
+    function changeSprint(select) {
+        buildChart(select.value);
+    }
     Chart.defaults.global.legend.display = false;
     Chart.defaults.global.tooltips.enabled = false;
     Chart.defaults.global.defaultFontColor = '#000';
-
     var ctx = document.getElementById('myChart').getContext('2d');
-    var references = labels.map((x, i) => maxHours * (labels.length - 1 - i) / (labels.length - 1));
-    console.log(references);
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
-        legend: {
-            display: false
-        },
-        tooltips: {
-            enabled: false
-        },
-        // The data for our dataset
-        data: {
-            labels: labels,
-            datasets: [{
-                label: "",
-                borderColor: 'black',
-                data: references,
-                backgroundColor: 'transparent',
-                pointRadius: 0,
-                borderWidth: 2,
-                datalabels: {
-                    display: false
-                },
-            }, {
-                label: "1",
-                tension: 0,
-                borderColor: 'black',
-                data: sprintData,
-                backgroundColor: 'transparent',
-                pointRadius: 0,
-                borderWidth: 2,
-            }]
-        },
-
-        // Configuration options go here
-        options: {
-            plugins: {
-                datalabels: {
-                    backgroundColor: 'black',
-                    borderRadius: 4,
-                    color: 'white',
-                    font: {
-                        weight: 'bold'
-                    },
-                    formatter: Math.round
-                }
+    function buildChart(sprintName) {
+        var references = labels[sprintName].map((x, i) =>
+            maxHours[sprintName] * (labels[sprintName].length - 1 - i) / (labels[sprintName].length - 1));
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+            legend: {
+                display: false
             },
-            scales: {
-                yAxes: [{
-                    type: 'linear',
-                    ticks: {
-                        max: maxHours,
-                        suggestedMin: 0,
-                        stepSize: maxHours / 20,
-                        fontSize: 14
+            tooltips: {
+                enabled: false
+            },
+            // The data for our dataset
+            data: {
+                labels: labels[sprintName],
+                datasets: [{
+                    label: "",
+                    borderColor: 'black',
+                    data: references,
+                    backgroundColor: 'transparent',
+                    pointRadius: 0,
+                    borderWidth: 2,
+                    datalabels: {
+                        display: false
                     },
-                    gridLines: {
-                        zeroLineColor: '#000',
-                        zeroLineWidth: 2
-                    }
-                }],
-                xAxes: [{
-                    gridLines: {
-                        zeroLineColor: '#000',
-                        zeroLineWidth: 2
-                    },
-                    ticks: {
-                        fontSize: 14
-                    }
+                }, {
+                    label: "1",
+                    tension: 0,
+                    borderColor: 'red',
+                    data: sprintData[sprintName],
+                    backgroundColor: 'transparent',
+                    pointRadius: 0,
+                    borderWidth: 2
                 }]
+            },
+
+            // Configuration options go here
+            options: {
+                plugins: {
+                    datalabels: {
+                        backgroundColor: 'red',
+                        borderRadius: 10,
+                        color: 'white',
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: Math.round
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        type: 'linear',
+                        ticks: {
+                            max: maxHours[sprintName],
+                            suggestedMin: 0,
+                            stepSize: maxHours[sprintName] / 20,
+                            fontSize: 14
+                        },
+                        gridLines: {
+                            zeroLineColor: '#000',
+                            zeroLineWidth: 2
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            zeroLineColor: '#000',
+                            zeroLineWidth: 2
+                        },
+                        ticks: {
+                            fontSize: 14
+                        }
+                    }]
+                }
             }
-        }
-    });
+        });
+    }
 </script>
 
 </html>
