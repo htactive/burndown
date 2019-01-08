@@ -42,4 +42,4 @@ var sprintData = {
     's19': [200],
 };
 
-var maxHours = { 's17': 176, 's18': 176.5 };
+var maxHours = { 's17': 176, 's18': 176.5, 's19': 200 };
