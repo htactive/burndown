@@ -31,8 +31,7 @@ var labels = {
         "16-Jan",
         "17-Jan",
         "18-Jan",
-        "21-Jan",
-        "22-Jan",
+        "21-Jan"
     ]
 };
 
